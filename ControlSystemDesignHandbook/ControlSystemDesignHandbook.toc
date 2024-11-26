@@ -1,0 +1,24 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Control System Design Steps:}{3}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Control Theories}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Classical Control Theory}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}State-Space Control Theory}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Optimal Control Theory}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Adaptive Control Theory}{8}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Robust Control Theory}{8}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Nonlinear Control Theory}{9}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Stochastic Control Theory}{9}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Game Theory in Control}{9}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}Distributed and Decentralized Control}{9}{subsection.2.9}%
+\contentsline {subsection}{\numberline {2.10}Learning-Based Control}{10}{subsection.2.10}%
+\contentsline {subsection}{\numberline {2.11}Modern Control Theory}{10}{subsection.2.11}%
+\contentsline {section}{\numberline {3}Control Strategies}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Classical Control Strategies}{12}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Optimal Control Strategies}{12}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Robust Control Strategies}{13}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Adaptive Control Strategies}{13}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Intelligent Control Strategies}{13}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Nonlinear Control Strategies}{14}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Modern Control Strategies}{14}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Hybrid and Event-Driven Control}{14}{subsection.3.8}%
