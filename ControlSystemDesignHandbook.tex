@@ -1,0 +1,651 @@
+\documentclass{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{thmtools}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{framed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{array}
+\usepackage{enumitem}
+
+\colorlet{LightGray}{White!90!Periwinkle}
+\colorlet{LightOrange}{Orange!15}
+\colorlet{LightGreen}{Green!15}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+\declaretheoremstyle[name=Theorem,]{thmsty}
+\declaretheorem[style=thmsty,numberwithin=section]{theorem}
+\tcolorboxenvironment{theorem}{colback=LightGray}
+
+\declaretheoremstyle[name=Proposition,]{prosty}
+\declaretheorem[style=prosty,numberlike=theorem]{proposition}
+\tcolorboxenvironment{proposition}{colback=LightOrange}
+
+\declaretheoremstyle[name=Principle,]{prcpsty}
+\declaretheorem[style=prcpsty,numberlike=theorem]{principle}
+\tcolorboxenvironment{principle}{colback=LightGreen}
+
+\setstretch{1.2}
+\geometry{
+    textheight=9in,
+    textwidth=5.5in,
+    top=1in,
+    headheight=12pt,
+    headsep=25pt,
+    footskip=30pt
+}
+
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% Cover Page and ToC
+% ------------------------------------------------------------------------------
+
+\title{ \normalsize \textsc{}
+		\\ [2.0cm]
+		\HRule{1.5pt} \\
+		\LARGE \textbf{\uppercase{CONTROL SYSTEM DESIGN HANDBOOK}
+		\HRule{2.0pt} \\ [0.6cm] \LARGE{} \vspace*{10\baselineskip}}
+		}
+\date{}
+\author{\textbf{Author} \\ 
+		Anshul Jain \\
+		University of Colorado at Boulder \\
+		2024}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+% ------------------------------------------------------------------------------
+
+\section{Introduction}
+This document is a discussion of Control Systems. When we talk about control systems, there are a lot of things to keep in mind given the breadth of the field and varied applications in almost all mechanical systems. These can be broadly classified as:
+\begin{enumerate}
+    \item Control System Frameworks
+        \begin{enumerate}
+            \item Control Theories:
+            Gives the mathematics behind understanding the behavior of any mechanical system.
+        \end{enumerate}
+    \item Control System Design
+        \begin{enumerate}
+            \item Control Strategies:
+            Methods used to design control laws. Practical implementation of the control theories.
+            \item Control Algorithms:
+            Computational method used to implement the appropriate control  strategy.
+            \item Control System Components:
+            Physical components involved in control systems.
+            \item Control System Architectures:
+            Structural organization of control systems.
+            \item Control System Design Methods:
+            Techniques for designing the control system.
+        \end{enumerate}
+    \item Control System Testing, Evaluation and Optimization
+        \begin{enumerate}
+            \item Control System Performance Metrics:
+            Measures for evaluating control system effectiveness.
+            \item Control System Simulation and Testing:
+            Techniques for validating control systems.
+            \item Control System Optimization:
+            Methods to improve the performance of the control system.
+        \end{enumerate}
+\end{enumerate}
+
+All these areas are interrelated and some depend on one or the other. If given to design a control system for a mechanical system, this classification can be used as a step-by-step approach to design and use a suitable and effective control system. I use the word suitable as each mechanical system is different in a way that it requires some different combination of these items to fit the most effective control system. Even more so it turns out that one system can have multiple control system designs that can control the system with varied efficiencies and performance. To design a particular control system, we need to follow a certain step-by-step approach in order to be efficient in the process. I suggest one sequence of steps that can be undertaken to design a control system.
+\subsection{Control System Design Steps:}
+\begin{enumerate}
+    \item Control System Components and Applications (Control System Components): Define the system and its requirements, along with the objectives and constraints for the system.
+        \begin{enumerate}[label=\roman*.]
+            \item Identify the physical components of the system.
+            \item Determine the specific application of the system, such as Automotive, Aerospace, Robotics, etc.
+            \item Clarify the system requirements such as reliability, accuracy, speed, robustness, and energy efficiency.
+            \item Define performance goals, such as response time and error margins.
+        \end{enumerate}
+    \item Develop the System Model (Control Theories): Establish the mathematical model that will act as the foundation for the control system.
+        \begin{enumerate}[label=\roman*.]
+            \item Understand the dynamics of the system.
+            \item Model the system using differential equations, state space models, transfer functions, etc. State Space models are widely used.
+            \item Identify the uncertainties and disturbances in the system.
+            \item Use system ID techniques if the system model is unknown.
+        \end{enumerate}
+    \item Select the Control Strategy (Control Strategies): Choose the strategy that will best achieve the desired system performance based on its characteristics and goals.
+        \begin{enumerate}[label=\roman*.]
+            \item Choose between Open-Loop Control and Closed-Loop Control.
+            \item Based on the system complexity and performance goals, select the appropriate control strategy, such as PID Control, LQR Control, MPC Control, etc.
+            \item Consider optimal control, adaptive control or robust control depending on system uncertainties and changing conditions.
+        \end{enumerate}
+    \item Design the Control Algorithm (Control Algorithms): Develop the algorithm that implements the chosen control strategy.
+        \begin{enumerate}[label=\roman*.]
+            \item Develop the algorithm based on the control strategy chosen.
+            \item Use simulation tools (MATLAB, Python) to test the behavior of the algorithm.
+            \item Consider real-time constraints and computational feasibility when designing the algorithm.
+        \end{enumerate}
+    \item Choose the Control System Architecture (Control System Architectures): Define how the system will be structured, how components will interact, and whether the system will be centralized or decentralized.
+        \begin{enumerate}[label=\roman*.]
+            \item Decide on the architecture, such as SISO, MIMO, etc.
+            \item Design the communication structure between different components, such as sensors, actuators, controllers, etc.
+        \end{enumerate}
+    \item Model the Controller and Test in Simulations (Control System Simulation and Testing): Validate the designed control system in a simulation environment with real hardware.
+        \begin{enumerate}[label=\roman*.]
+            \item Model the controller and the plant in a simulation environment, such as Simulink.
+            \item Run tests to check the system's stability, performance and robustness.
+            \item Use MONTE CARLO simulations or other testing methods to assess the performance under various scenarios with disturbances and noise.
+        \end{enumerate}
+    \item Implement the Controller: Implement the control algorithm in the real system if the testing in the simulation environments is completed successfully.
+        \begin{enumerate}[label=\roman*.]
+            \item Select the appropriate hardware, such as microcontrollers, FPGA, PLC, HMI, etc.
+            \item Ensure real-time implementation.
+            \item Integrate the system components including sensors, actuators, and controllers into the physical system.
+        \end{enumerate}
+    \item Tune and Optimize the Controller (Control System Optimization): Fine-tune the system to achieve optimal performance based on feedback from real-world tests.
+        \begin{enumerate}[label=\roman*.]
+            \item Optimize the controller parameters using techniques such as PID tuning, or optimal control techniques, such as LQR, genetic algorithms, etc.
+            \item Adjust parameters for optimal response time, robustness and energy consumption.
+            \item Perform trade-off analysis to balance different performance metrics, such as speed vs stability, etc.
+        \end{enumerate}
+    \item Validate and Test the System (Control System Performance Metrics): Measure and evaluate system performance based on predefined metrics.
+        \begin{enumerate}[label=\roman*.]
+            \item Test the system under real operating conditions.
+            \item Evaluate performance based on key metrics, such as stability, response time, accuracy, reliability, and robustness.
+            \item Measure the energy efficiency and optimize if necessary.
+        \end{enumerate}
+    \item Iterative Improvement (Control System Design Methods): Refine the control system design based on feedback from the tests and performance evaluation.
+        \begin{enumerate}[label=\roman*.]
+            \item Identify areas of improvements from the data received from the tests.
+            \item Adjust the appropriate part of the control system to improve performance.
+            \item Repeat the simulation, tuning and testing until the desired results are achieved.
+        \end{enumerate}
+    \item Monitor and Adapt Over Time (Adaptive Control): Continuously monitor the system and adjust the control parameters if needed.
+        \begin{enumerate}[label=\roman*.]
+            \item Implement adaptive control techniques as the system's environment and/or dynamics change over time.
+            \item Track the system behavior using real-time monitoring tools and adjust the control strategy or parameters in response to changing conditions.
+        \end{enumerate}
+\end{enumerate}
+
+\newpage
+
+\section{Control Theories}
+This section gives a breakdown of all major control theories and discusses them briefly with their equations.
+
+\subsection{Classical Control Theory}
+\begin{itemize}
+    \item Focuses on \underline{Single-Input, Single-Output (SISO)} systems.
+    \item Relies on frequency and time-domain analysis.
+    \item Uses \underline{Transfer Functions} for system representation.
+\end{itemize}
+Key techniques used in Classical Control Theory are:
+\begin{enumerate}
+    \item Root Locus
+        \begin{itemize}
+            \item Plots the \underline{location of poles} as the system parameters vary.
+            \item Stability and Transient performance are analyzed.
+            \item The equation for Root Locus analysis is:            
+                \[1 + G(s)H(s) = 0\]
+            where, G(s) is the open-loop transfer function and H(s) is the feedback transfer function.
+            \end{itemize}
+    \item Bode Plot
+        \begin{itemize}
+            \item \underline{Frequency response plot} of magnitude and phase vs frequency.
+            \item Used for stability margins and bandwidth analysis.
+            \item Gain and phase margins ensure stability.
+        \end{itemize}
+    \item Nyquist Plot
+            \begin{itemize}
+                \item Plots the frequency response in the \underline{complex plane}.
+                \item Used for \underline{closed-loop stability}.
+            \end{itemize}
+    \item Time-Domain analysis
+        \begin{itemize}
+            \item Based on \underline{step, impulse or ramp responses}.
+            \item Uses rise time ($t_{r}$), settling time ($t_{s}$), and overshoot ($M_{p}$).
+        \end{itemize}
+\end{enumerate}
+
+\subsection{State-Space Control Theory}
+\begin{itemize}
+    \item Generalizes control to \underline{Multi-Input, Multi-Output (MIMO)} systems.
+    \item Models system using state variables.
+\end{itemize}
+General equation set for state space representation of a system is:
+\begin{align}
+    \dot{\mathbf{x}}(t) &= A\mathbf{x}(t) + B\mathbf{u}(t), \\
+    \mathbf{y}(t) &= C\mathbf{x}(t) + D\mathbf{u}(t),
+\end{align}
+where:
+\begin{itemize}
+    \item $\mathbf{x}(t)$: State vector,
+    \item $\mathbf{u}(t)$: Input vector,
+    \item $\mathbf{y}(t)$: Output vector,
+    \item A: State matrix,
+    \item B: Input matrix,
+    \item C: Output matrix, and
+    \item D: Feedthrough (or direct transmission) matrix.
+\end{itemize}
+Key concepts in State Space Control Theory are:
+\begin{enumerate}
+    \item Controllability
+        \begin{itemize}
+            \item Ability to move the system to any state using the inputs.
+            \item The controllability matrix is given as:              
+                \[ C = [B, AB, A^2B, ..., A^{n-1}B] \]
+            \item The system is said to be fully controllable if the controllability matrix is a full rank matrix:
+                \[ rank(C) = n \]
+        \end{itemize}
+    \item Observability
+        \begin{itemize}
+            \item Ability to reconstruct state variables from the output.
+            \item The observability matrix is given as:
+                \[ O = [C, CA, CA^2, ..., CA^{n-1}]^{T} \]
+            \item The system is said to be fully observable if the observability matrix is a full rank matrix:
+                \[ rank(O) = n \]
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Optimal Control Theory}
+\begin{itemize}
+    \item Aims to \underline{minimize a cost function} while satisfying system dynamics.
+    \item Used in systems requiring efficiency or resource constraints.
+\end{itemize}
+Key methods used in Optimal Control Theory are:
+\begin{enumerate}
+    \item Linear Quadratic Regulator (LQR)
+        \begin{itemize}
+            \item Minimizes \underline{quadratic cost}.
+                \[ J = \int_{0}^{\infty} (\mathbf{x^{T}}Q\mathbf{x} + \mathbf{u^{T}}R\mathbf{u}) dt \]
+                where, Q and R are weight matrices.
+        \end{itemize}
+    \item Pontryagin's Maximum Principle
+        \begin{itemize}
+            \item Determines control laws by \underline{maximizing Hamiltonian}.
+                \[ \mathcal{H} = \mathbf{p}^{T}(A\mathbf{x} + B\mathbf{u}) + \mathbf{x}^{T}Q\mathbf{x} + \mathbf{u}^{T}R\mathbf{u} \]
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Adaptive Control Theory}
+\begin{itemize}
+    \item Handles systems with \underline{time-varying or uncertain parameters}.
+    \item Adjusts control parameters in real-time.
+\end{itemize}
+Key techniques used in Adaptive Control Theory are:
+\begin{enumerate}
+    \item Model Reference Adaptive Control
+        \begin{itemize}
+            \item Tracks a reference model behavior.
+            \item Update law is given as:
+                \[ \dot{\theta} = - \gamma\mathbf{e}\phi^{T} \]
+            where:
+            \begin{itemize}
+                \item $\mathbf{e}$ is the error,
+                \item $\phi$ is the regression vector, and
+                \item $\gamma$ is the adaptation gain.
+            \end{itemize}
+        \end{itemize}
+    \item Self-Tuning Regulators (STR)
+        \begin{itemize}
+            \item Updates controller gains based on parameter estimates.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Robust Control Theory}
+\begin{itemize}
+    \item Deals with uncertainties in the system model.
+    \item \underline{Ensures stability and performance} even with modeling errors.
+\end{itemize}
+Key concepts in Robust Control Theory are:
+\begin{enumerate}
+    \item H-infinity $\mathbf{(H_{\infty})}$ Control
+        \begin{itemize}
+            \item Minimizes the \underline{worst-case gain} of transfer function:
+                \[ \|T(s)\|_{\infty} = \sup_{\omega}\|T(j\omega)\| \]
+        \end{itemize}
+    \item Small Gain Theorem
+        \begin{itemize}
+            \item Ensures stability if:
+                \[ \|G(s)H(s)\| < 1 \]
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Nonlinear Control Theory}
+\begin{itemize}
+    \item Addresses systems with nonlinear dynamics.
+    \item Does not rely on linear approximations.
+\end{itemize}
+Key techniques used in Nonlinear Control Theory are:
+\begin{enumerate}
+    \item Lyapunov Stability
+        \begin{itemize}
+            \item Stability analysis using Lyapunov function V(x):
+                \[ \dot{V}(x) < 0 \implies Stable \]
+        \end{itemize}
+    \item Feedback Linearization
+        \begin{itemize}
+            \item Cancels nonlinearities through control design.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Stochastic Control Theory}
+\begin{itemize}
+    \item Handles \underline{systems with randomness in inputs or states}.
+\end{itemize}
+Key methods used in Stochastic Control Theory are:
+\begin{enumerate}
+    \item Kalman Filter
+        \begin{itemize}
+            \item Estimates states of a stochastic system.
+                \[ \hat{\mathbf{x}}_{k|k} = \hat{\mathbf{x}}_{k|k-1} + K_{k}(z_{k} - H\hat{\mathbf{x}}_{k|k-1}) \]
+                where:
+                \begin{itemize}
+                    \item $\hat{\mathbf{x}}_{k|k}$: State estimate at time $k$ after incorporating measurement,
+                    \item $\hat{\mathbf{x}}_{k|k-1}$: Predicted state estimate at time $k$,
+                    \item $K_k$: Kalman gain,
+                    \item $z_k$: Measurement at time $k$, and
+                    \item $H$: Measurement matrix.
+                \end{itemize}
+        \end{itemize}
+    \item Linear Quadratic Gaussian (LQG)
+        \begin{itemize}
+            \item Combines LQR and Kalman Filter for stochastic systems.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Game Theory in Control}
+\begin{itemize}
+    \item Used for \underline{multi-agent or competitive systems}.
+    \item Analyses \underline{Nash equilibria} and strategies.
+\end{itemize}
+
+\subsection{Distributed and Decentralized Control}
+\begin{itemize}
+    \item Used in systems with \underline{multiple controllers communicating partially or not at all}.
+    \item Common in \underline{large scale systems} like power grids.
+\end{itemize}
+
+\subsection{Learning-Based Control}
+\begin{itemize}
+    \item Integrates \underline{Machine Learning} into control.
+    \item Adjusts controllers using \underline{data-driven models}.
+\end{itemize}
+Key techniques used in Learning-Based Control:
+\begin{enumerate}
+    \item Reinforcement Learning
+        \begin{itemize}
+            \item \underline{Optimizes} control policies based on \underline{rewards}.
+        \end{itemize}
+    \item Model Predictive Control (MPC) with Learned Models
+        \begin{itemize}
+            \item Uses learned dynamics for predictive control.
+        \end{itemize}
+\end{enumerate}
+
+Another control theory called \textbf{Model Predictive Control (MPC)} can be included in the breakdown here, although it is sometimes considered both, a control theory as well as a control strategy depending on the context in which it is mentioned. If we try to include it in here, it would lie within Modern Control Theory under Optimal Control Theory.
+
+\subsection{Modern Control Theory}
+Modern Control Theory is an extension of the Classical Control Theory where we deal with more complex systems, especially MIMO systems. It encompasses all the theories and techniques discussed above to analyze complex, MIMO, nonlinear, time-varying or higher dimensional systems.
+
+Some additional concepts that are necessary in the context of modern control theory are:
+\begin{enumerate}
+    \item State Feedback Design
+        \begin{itemize}
+            \item State Feedback Control (Pole Placement)
+            \begin{itemize}
+                \item Places closed-loop poles to achieve desired system dynamics.
+                \item Control law:
+                    \[ \mathbf{u}(t) = -K\mathbf{x}(t) \]
+                where, K is the \underline{Feedback Gain Matrix}.
+            \end{itemize}
+        \end{itemize}
+    \item Observers and Estimators
+        \begin{itemize}
+            \item Constructs systems to estimate states when full state measurement is not available.
+            \item Example: \textbf{Luenberger Observer}
+                \[ \dot{\hat{\mathbf{x}}}(t) = A\hat{\mathbf{x}}(t) + B\mathbf{u}(t) + L(\mathbf{y}(t) - C\hat{\mathbf{x}}(t)) \]
+                where:
+                    \begin{itemize}
+                        \item $\hat{\mathbf{x}}(t)$ is the estimated state, and
+                        \item \textbf{L} is the \underline{Oberver Gain}. 
+                    \end{itemize}
+        \end{itemize}
+\end{enumerate}
+
+Tools used in Modern Control Theory, also called as Modern Control Tools:
+\begin{enumerate}
+    \item Kalman Filter (Stochastic Estimation)
+        \begin{itemize}
+            \item Used in stochastic systems to estimate states with noise.
+            \item Optimal estimator for linear systems with Gaussian noise.
+        \end{itemize}
+    \item Model Predictive Control (MPC)
+        \begin{itemize}
+            \item \underline{Optimizes a control sequence over a finite horizon}.
+            \item Incorporates \underline{constraints} on states and inputs.
+        \end{itemize}
+    \item Robust Control
+        \begin{itemize}
+            \item Addresses uncertainties in model parameters.
+            \item Ensures system stability despite perturbations.
+        \end{itemize}
+    \item Decentralized Control
+        \begin{itemize}
+            \item Control architecture for large systems divided into subsystems.
+            \item Examples: Power Grids, Spacecraft Formations, etc.
+        \end{itemize}
+\end{enumerate}
+
+Differences between Modern Control Theory and Classical Control Theory are summarized in Table 1 below:
+\renewcommand{\arraystretch}{1.35}
+\begin{table}[h]
+\centering
+\caption{Differences between Modern and Classical Control Theories}
+\begin{tabular}{|l|l|l|}
+\hline
+    \textbf{Aspect} & \textbf{Classical Control Theory} & \textbf{Modern Control Theory} \\ \hline
+    \textbf{System Type} & SISO & MIMO \\ \hline
+    \textbf{Analysis Domain} & Frequency (Bode, Nyquist) & Time (State Space) \\ \hline
+    \textbf{Dynamics} & Linear, Time-Invariant (LTI) & Nonlinear, Time-varying supported \\ \hline
+    \textbf{Representation} & Transfer Function & State Space \\ \hline
+    \textbf{Focus} & Stability, Transient response & Controllability, Observability \\ \hline
+    \textbf{Design} & PID, Lead-Lag & LQR, MPC, State Feedback \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\section{Control Strategies}
+Control Strategies are what allows us to regulate the control system in order to achieve the desired performance. The number of control strategies out there are vast and researches continuously develop new strategies. This section gives a breakdown of the major control strategies organized by category.
+
+\subsection{Classical Control Strategies}
+These strategies are based on classical control theory that uses transfer functions and frequency-domain analysis. These strategies are commonly used for simple systems, although in the industry, these are heavily used in complex systems as well.
+\begin{enumerate}
+    \item Proportional-Integral-Derivative Control (PID Controller)
+        \begin{itemize}
+            \item This is the most widely used feedback controller.
+            \item \textbf{Proportional}: \underline{Corrects errors proportional to the difference}.
+            \item \textbf{Integral}: \underline{Eliminates steady-state error by integrating the error}.
+            \item \textbf{Derivative}: \underline{Predicts future error trends and adds damping}.
+            \item Used in almost every domain, from thermostats to motor control.
+        \end{itemize}
+    \item Lead-Lag Compensator
+        \begin{itemize}
+            \item Enhances system performance by \underline{improving phase margin (lead) or reducing steady-state error (lag)}.
+            \item Used in power systems and simple control loops.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Optimal Control Strategies}
+As the name suggests, these strategies optimize a performance criterion, such as cost or energy.
+\begin{enumerate}
+    \item Linear Quadratic Regulator (LQR Controller)
+        \begin{itemize}
+            \item Minimizes quadratic cost function involving state and control variables.
+            \item Applications of LQR include Aircraft Control Systems and Spacecraft Attitude Control.
+        \end{itemize}
+    \item Linear Quadratic Gaussian Control (LQG Controller)
+        \begin{itemize}
+            \item Combines LQR with Kalman Filter to handle noisy measurements.
+            \item Used in systems with measurement uncertainty, such as Robotics.
+        \end{itemize}
+    \item Model Predictive Control (MPC Controller)
+        \begin{itemize}
+            \item Solves a constrained optimization problem at each step to predict future behavior.
+            \item Used in chemical process, autonomous vehicles, energy systems.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Robust Control Strategies}
+These strategies deal with uncertainty in system models.
+\begin{enumerate}
+    \item H-$\infty$ Control
+        \begin{itemize}
+            \item Minimizes the worst-case scenario in system performance, improving robustness against disturbances and model accuracies.
+            \item Used in aerospace systems.
+        \end{itemize}
+    \item $\mu$-Synthesis
+        \begin{itemize}
+            \item Advanced robust control strategy that minimizes structured uncertainties.
+            \item Used in high-precision manufacturing systems, aerospace systems.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Adaptive Control Strategies}
+These strategies are used when system parameters vary over time.
+\begin{enumerate}
+    \item Gain Scheduling
+        \begin{itemize}
+            \item Changes controller gains based on operator conditions.
+            \item Used in Aircraft Control Systems, Wind Turbines.
+        \end{itemize}
+    \item Model Reference Adaptive Control (MRAC Controller)
+        \begin{itemize}
+            \item Adjusts controller parameters to ensure system output matches a reference model.
+            \item Used in aerospace and robotic systems.
+        \end{itemize}
+    \item Self-Tuning Regulators
+        \begin{itemize}
+            \item Combines parameter estimation with control law adjustments.
+            \item Used in automation.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Intelligent Control Strategies}
+These control strategies use Artificial Intelligence and Machine Learning.
+\begin{enumerate}
+    \item Fuzzy Logic Control
+        \begin{itemize}
+            \item Mimics human reasoning using "if-then" rules with fuzzy variables.
+            \item Used in washing machines, automotive systems (such as traction control).
+        \end{itemize}
+    \item Neural Network Control
+        \begin{itemize}
+            \item Uses Neural Networks to approximate unknown system dynamics.
+            \item Used in Nonlinear systems, autonomous systems.
+        \end{itemize}
+    \item Reinforcement Learning Based Control
+        \begin{itemize}
+            \item Uses trial-and-error learning to optimize control policies.
+            \item Robotics, Self-Driving Cars.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Nonlinear Control Strategies}
+These strategies aid in handling systems which have nonlinear dynamics.
+\begin{enumerate}
+    \item Sliding Mode Control (SMC Controller)
+        \begin{itemize}
+            \item \underline{Forces} the system to "slide" along a desired trajectory despite disturbances.
+            \item Used in Robotics, automotive systems.
+        \end{itemize}
+    \item Backstepping
+        \begin{itemize}
+            \item A recursive design for stabilizing nonlinear systems.
+            \item Used in aerospace systems and chemical reactors.
+        \end{itemize}
+    \item Feedback Linearization
+        \begin{itemize}
+            \item Cancels nonlinearities by transforming the system into a linear equivalent.
+            \item Used in electric motor control, satellite attitude control.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Modern Control Strategies}
+These strategies are applied to complex systems.
+\begin{enumerate}
+    \item State Feedback Control
+        \begin{itemize}
+            \item Uses pole placement to stabilize the system.
+            \item Used in robotics and multi-axis systems.
+        \end{itemize}
+    \item Kalman Filter Based Control
+        \begin{itemize}
+            \item Estimates the state of a system under noise and uncertainty.
+            \item Used in navigation and radar tracking.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Hybrid and Event-Driven Control}
+\begin{enumerate}
+    \item Hybrid Systems Control
+        \begin{itemize}
+            \item Combines discrete and continuous control, often modeled as \underline{state machines}.
+            \item Used in automotive gear-shifting, UAVs.
+        \end{itemize}
+    \item Event-Triggered Control
+        \begin{itemize}
+            \item Executes control actions based on events rather than time steps.
+            \item Used in wireless sensor networks.
+        \end{itemize}
+\end{enumerate}
+
+
+
+
+
+
+% ------------------------------------------------------------------------------
+% Reference and Cited Works
+% ------------------------------------------------------------------------------
+
+%\bibliographystyle{IEEEtran}
+%\bibliography{References.bib}
+
+%\begin{theorem}
+%    This is a theorem.
+%\end{theorem}
+
+%\begin{proposition}
+%    This is a proposition.
+%\end{proposition}
+
+%\begin{principle}
+%    This is a principle.
+%\end{principle}
+
+% Maybe I need to add one more part: Examples.
+% Set style and colour later.
+
+%\subsection{Pictures}
+
+%\begin{figure}[htbp]
+%    \center
+%    \includegraphics[scale=0.06]{img/photo.jpg}
+%    \caption{Sydney, NSW}
+%\end{figure}
+
+%\subsection{Citation}
+
+%This is a citation\cite{Eg}.
+
+% ------------------------------------------------------------------------------
+
+\end{document}
